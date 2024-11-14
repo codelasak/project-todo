@@ -3,7 +3,6 @@ import {
   CheckSquare, 
   Users, 
   Settings, 
-  BarChart,
   Calendar,
   X,
   Search,
@@ -33,11 +32,6 @@ export function AdminSidebar({ isOpen, toggleSidebar }: SidebarProps) {
     { 
       title: 'Calendar', 
       icon: <Calendar size={20} />, 
-      path: '#' 
-    },
-    { 
-      title: 'Analytics', 
-      icon: <BarChart size={20} />, 
       path: '#' 
     },
     { 
