@@ -3,8 +3,8 @@ import { Task } from './types';
 import { TaskInput } from './components/TaskInput';
 import { TaskFilters } from './components/TaskFilters';
 import { TaskItem } from './components/TaskItem';
-import { Header } from './components/header';
-import { Footer } from './components/footer';
+import { Menu, Bell } from 'lucide-react';
+import { AdminSidebar } from './components/AdminSidebar';
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -14,6 +14,7 @@ function App() {
   const [newTask, setNewTask] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tümü');
   const [showCompleted, setShowCompleted] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const categories = ['İş', 'Kişisel', 'Alışveriş', 'Sağlık', 'Diğer'];
 
@@ -76,41 +77,64 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex flex-col">
-      <Header />
-      <div className="container mx-auto px-4 py-8 max-w-4xl flex-grow">
-        <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-          Fennaver Yapılcaklar Listesi
-        </h1>
+    <div className="min-h-screen bg-gray-50 flex">
+      <AdminSidebar 
+        isOpen={sidebarOpen} 
+        toggleSidebar={() => setSidebarOpen(!sidebarOpen)} 
+      />
+      
+      <div className="flex-1 flex flex-col min-h-screen">
+        <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-10">
+          <div className="h-full px-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden p-2 hover:bg-gray-100 rounded-lg text-gray-600"
+              >
+                <Menu size={24} />
+              </button>
+              <h1 className="text-xl font-semibold text-gray-800">Tasks</h1>
+            </div>
+            <div className="flex items-center gap-3">
+              <button className="relative p-2 hover:bg-gray-100 rounded-lg text-gray-600">
+                <Bell size={20} />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
+              </button>
+            </div>
+          </div>
+        </header>
 
-        <TaskInput
-          newTask={newTask}
-          setNewTask={setNewTask}
-          addTask={addTask}
-        />
-
-        <TaskFilters
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          showCompleted={showCompleted}
-          setShowCompleted={setShowCompleted}
-        />
-
-        <div className="space-y-4">
-          {filteredTasks.map(task => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              toggleTask={toggleTask}
-              updateTask={updateTask}
-              deleteTask={deleteTask}
-              addSubTask={addSubTask}
+        <main className="flex-1 p-6">
+          <div className="max-w-5xl mx-auto">
+            <TaskInput
+              newTask={newTask}
+              setNewTask={setNewTask}
+              addTask={addTask}
             />
-          ))}
-        </div>
+
+            <TaskFilters
+              categories={categories}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              showCompleted={showCompleted}
+              setShowCompleted={setShowCompleted}
+            />
+
+            <div className="space-y-4">
+              {filteredTasks.map(task => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  toggleTask={toggleTask}
+                  updateTask={updateTask}
+                  deleteTask={deleteTask}
+                  addSubTask={addSubTask}
+                />
+              ))}
+            </div>
+          </div>
+        </main>
       </div>
-      <Footer />
     </div>
   );
 }
