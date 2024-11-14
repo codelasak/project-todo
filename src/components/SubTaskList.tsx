@@ -1,11 +1,10 @@
-import React from 'react';
 import { CheckSquare, Square, Plus } from 'lucide-react';
 import { SubTask } from '../types';
 
 interface SubTaskListProps {
   subTasks: SubTask[];
   taskId: string;
-  updateTask: (taskId: string, updates: any) => void;
+  updateTask: (taskId: string, updates: unknown) => void;
   addSubTask: (taskId: string, title: string) => void;
 }
 

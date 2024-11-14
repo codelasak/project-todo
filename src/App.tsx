@@ -3,6 +3,8 @@ import { Task } from './types';
 import { TaskInput } from './components/TaskInput';
 import { TaskFilters } from './components/TaskFilters';
 import { TaskItem } from './components/TaskItem';
+import { Header } from './components/header';
+import { Footer } from './components/footer';
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -74,10 +76,11 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex flex-col">
+      <Header />
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-grow">
         <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-          To Do Liste Projesi
+          Fennaver Yapılcaklar Listesi
         </h1>
 
         <TaskInput
@@ -107,6 +110,7 @@ function App() {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
